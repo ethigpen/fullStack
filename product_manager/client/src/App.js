@@ -1,12 +1,29 @@
 import ProductsForm from "./components/ProductsForm";
-
+import ShowAll from "./components/ShowAll";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import React, { useState } from 'react';
 
 function App() {
+
+  const[submitted, setSubmitted] = useState(false)
   return (
-    <div className="container">
-      <h1>Product Manager</h1>
-      <ProductsForm></ProductsForm>
-    </div>
+    <BrowserRouter>
+      <Route exact path = "/">
+        <div className="container">
+          <h1>Product Manager</h1>
+          <ProductsForm submitted = {submitted} setSubmitted = {setSubmitted}></ProductsForm>
+          <ShowAll submitted = {submitted}></ShowAll>
+        </div>
+      </Route>
+      <Route exact path = "/product/:id">
+        <h1>you made it</h1>
+      </Route>
+    </BrowserRouter>
   );
 }
 

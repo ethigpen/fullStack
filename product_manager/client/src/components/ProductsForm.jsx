@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
 
 
 
-const ProductsForm = () => {
+const ProductsForm = (props) => {
 
     let[formInfo, setFormInfo] = useState({
         title: null,
@@ -26,6 +25,7 @@ const ProductsForm = () => {
         axios.post("http://localhost:8000/api/products", formInfo)
             .then(res=>{
                 console.log("response after submitting post request-->", res)
+                props.setSubmitted(!props.submitted)
             })
             .catch(err=>console.log("error with form submit", err))
         e.target.reset();
