@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import React, { useState } from 'react';
 import ShowOne from "./components/ShowOne";
+import EditProduct from "./components/EditProduct";
 
 function App() {
 
@@ -23,6 +24,9 @@ function App() {
       </Route>
       <Route exact path = "/product/:id">
         <ShowOne></ShowOne>
+      </Route>
+      <Route exact path = "/product/edit/:id">
+        <EditProduct></EditProduct>
       </Route>
     </BrowserRouter>
   );
