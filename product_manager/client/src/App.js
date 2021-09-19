@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import React, { useState } from 'react';
+import ShowOne from "./components/ShowOne";
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
         </div>
       </Route>
       <Route exact path = "/product/:id">
-        <h1>you made it</h1>
+        <ShowOne></ShowOne>
       </Route>
     </BrowserRouter>
   );
