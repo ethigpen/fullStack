@@ -10,6 +10,7 @@ const EditAuthor = () => {
     const { id } = useParams();
     const history = useHistory(); 
     const [authorInfo, setAuthorInfo] = useState({})
+    let [validationErrors, setValidationErrors] = useState({})
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/authors/${id}`)
@@ -34,7 +35,11 @@ const EditAuthor = () => {
         axios.put(`http://localhost:8000/api/authors/${id}`, authorInfo)
             .then(res=>{
                 console.log("response after submitting post request-->", res)
-                history.push(`/author/${id}`)
+                if(res.data.err){ 
+                    setValidationErrors(res.data.err.errors)
+                }else{ 
+                    history.push(`/author/${id}`)
+                }
             })
             .catch(err=>console.log("error with form submit", err))
         // e.target.reset();
@@ -49,6 +54,7 @@ const EditAuthor = () => {
                 <div className="mb-3">
                     <label className="form-label">Name</label>
                     <input onChange={changeHandler} name="name" type="text" className="form-control" value={authorInfo.name} />
+                    <p className="text-danger">{validationErrors.name? validationErrors.name.message: ""}</p>
                 </div>
                 <Link to={`/`} className="btn btn-primary">Cancel</Link> <button type="submit" className="btn btn-primary">Submit</button> 
             </form>

@@ -8,6 +8,7 @@ const AuthorForm = () => {
         name: null
     })
     const history = useHistory()
+    let [validationErrors, setValidationErrors] = useState({})
 
     const changeHandler = (e)=>{
         // console.log(e.target.name, e.target.value)
@@ -23,10 +24,13 @@ const AuthorForm = () => {
         axios.post("http://localhost:8000/api/authors", formInfo)
             .then(res=>{
                 console.log("response after submitting post request-->", res)
-                history.push("/")
+                if(res.data.err){ 
+                    setValidationErrors(res.data.err.errors)
+                }else{ 
+                    history.push("/"); 
+                }
             })
             .catch(err=>console.log("error with form submit", err))
-        // e.target.reset();
     }
 
     return (
@@ -36,6 +40,7 @@ const AuthorForm = () => {
                 <div className="mb-3">
                     <label className="form-label">Name</label>
                     <input onChange = {changeHandler} name="name" type="text" className="form-control"/>
+                    <p className="text-danger">{validationErrors.name? validationErrors.name.message: ""}</p>
                 </div>
                 <button type="submit" className="btn btn-primary">Create</button>
             </form>
